@@ -36,16 +36,11 @@ set_api_key(elevenlabs_key)
 class ElevenLabsService(SpeechService):
     """Speech service for Elevenlabs TTS API."""
 
-    def __init__(self,model='eleven_monolingual_v1',voice='Daniel',**kwargs):
+    def __init__(self,model='eleven_multilingual_v2',voice='Daniel',**kwargs):
         SpeechService.__init__(self, **kwargs)
         self.model = model
-        v = voices()
-
-        if voice in v:
-            self.voice = voice
-        else:
-            f"Missing Voice : {voice} not found in Elevenlabs voices , defaulting to {v[0]}"
-            self.voice = v[0]
+        logger.info("Voice: " + voice)
+        self.voice = voice
         
 
     def generate_from_text(self, text: str, cache_dir: str = None, path: str = None, **kwargs) -> dict:
